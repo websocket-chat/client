@@ -5,7 +5,7 @@
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" app dark >
       <v-list>
-        <v-list-item v-for="(page, i) in pages" :key="i" link>
+        <v-list-item v-for="(page, i) in pages" :key="i" link :to="page.href">
           <v-list-item-icon>
             <v-icon>
               {{ page.icon }}
@@ -21,7 +21,7 @@
     </v-navigation-drawer>
 
     <v-main>
-      <v-container fluid fill-height>
+      <v-container fluid fill-height class="pa-0">
         <router-view />
       </v-container>
     </v-main>
@@ -35,10 +35,10 @@ export default {
     return {
       drawer: false,
       pages: [
-        { name: "Home", icon: "mdi-home"},
-        { name: "Login & Signup", icon: "mdi-account" },
-        { name: "Admin", icon: "mdi-security"},
-        { name: "Messenger", icon: "mdi-message"}
+        { name: "Home", icon: "mdi-home", href: "/"},
+        { name: "Login & Signup", icon: "mdi-account", href: "/login" },
+        { name: "Admin", icon: "mdi-security", href: "/admin"},
+        { name: "Messenger", icon: "mdi-message", href: "/messenger"}
       ],
     }
   },
