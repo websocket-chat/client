@@ -32,13 +32,26 @@ export default {
       drawer: true,
       pages: [
         { name: "Login & Signup", icon: "mdi-account", href: "/login" },
-        { name: "Home", icon: "mdi-home", href: "/"},
-        { name: "Admin", icon: "mdi-security", href: "/admin"},
-        { name: "Messenger", icon: "mdi-message", href: "/messenger"}
+        { name: "Home", icon: "mdi-home", href: "/" },
+        { name: "Admin", icon: "mdi-security", href: "/admin" },
+        { name: "Messenger", icon: "mdi-message", href: "/messenger" },
       ],
-    }
+    };
   },
-}
+  computed: {
+    pageTitle() {
+      return this.$route.meta.title;
+    },
+  },
+  created() {
+    document.title = this.$route.meta.title;
+  },
+  watch: {
+    pageTitle(newVal) {
+      document.title = newVal;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -46,5 +59,4 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 </style>
