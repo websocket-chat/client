@@ -32,18 +32,25 @@
         large
         color="error"
         class="ma-1"
-        >
+      >
         Clear
       </v-btn>
-      <v-btn @click="loginUser" text outlined large color="success" class="ma-1">
+      <v-btn
+        @click="loginUser"
+        text
+        outlined
+        large
+        color="success"
+        class="ma-1"
+      >
         Login
       </v-btn>
     </v-card>
     <template v-slot:progress>
       <v-progress-linear
-          color="purple"
-          height="2"
-          indeterminate
+        color="purple"
+        height="2"
+        indeterminate
       ></v-progress-linear>
     </template>
   </v-card>
@@ -101,7 +108,8 @@ export default {
             text: "Success! 🎉",
             color: "success",
           });
-        });
+        })
+        .finally(() => {});
     },
     clearLoginForm() {
       this.username = "";
