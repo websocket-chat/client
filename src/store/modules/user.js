@@ -10,7 +10,7 @@ const user = {
   }),
   mutations: {
     setUserData(state, user) {
-      state.user = Object.assign({}, user);
+      state.user = Object.assign({}, user.data);
     },
   },
   getters: {

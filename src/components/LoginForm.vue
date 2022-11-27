@@ -104,6 +104,9 @@ export default {
         })
         .then((res) => {
           if (!res) return;
+
+          this.$store.commit("setUserData", res.data);
+
           this.$emit("snackbar", {
             text: "Success! 🎉",
             color: "success",
