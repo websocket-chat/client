@@ -1,9 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dark >
-      <v-app-bar-nav-icon  @click="drawer = !drawer" />
-    </v-app-bar>
-    <v-navigation-drawer v-model="drawer" app dark >
+    <v-navigation-drawer v-model="drawer" app dark expand-on-hover mini-variant>
       <v-list>
         <v-list-item v-for="(page, i) in pages" :key="i" link :to="page.href">
           <v-list-item-icon>
@@ -19,7 +16,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
     <v-main>
       <v-container fluid fill-height class="pa-0">
         <router-view />
@@ -33,10 +29,10 @@ export default {
   components: {},
   data() {
     return {
-      drawer: false,
+      drawer: true,
       pages: [
-        { name: "Home", icon: "mdi-home", href: "/"},
         { name: "Login & Signup", icon: "mdi-account", href: "/login" },
+        { name: "Home", icon: "mdi-home", href: "/"},
         { name: "Admin", icon: "mdi-security", href: "/admin"},
         { name: "Messenger", icon: "mdi-message", href: "/messenger"}
       ],
