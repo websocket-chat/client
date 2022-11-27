@@ -9,13 +9,15 @@ const user = {
     },
   }),
   mutations: {
-    setUserData(user) {
-      this.user = Object.assign({}, user);
+    setUserData(state, user) {
+      state.user = Object.assign({}, user);
     },
   },
   getters: {
-    userInfo(user) {
-      return user;
+    userInfo(state) {
+      return state.user;
     },
   },
 };
+
+export default user;
