@@ -8,9 +8,9 @@
     class="d-flex justify-center align-center"
   >
     <v-card dark height="auto" width="50%" elevation="12">
-      <v-tabs v-model="tab" centered dark icons-and-text>
-        <v-tabs-slider />
-        <v-tab> Signup </v-tab>
+      <v-tabs v-model="tab" centered dark grow>
+        <v-tabs-slider color="purple"/>
+        <v-tab> Signup  </v-tab>
         <v-tab> Login </v-tab>
       </v-tabs>
       <v-tabs-items dark v-model="tab">
@@ -52,6 +52,7 @@ export default {
       this.turnOnSnackbar();
       this.setSnackbarText(text);
       this.setSnackbarColor(color);
+      this.tab = 1;
     },
     turnOnSnackbar() {
       this.snackbar = true;
