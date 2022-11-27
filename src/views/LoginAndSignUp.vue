@@ -9,46 +9,46 @@
   >
     <v-card dark height="auto" width="50%" elevation="12">
       <v-tabs v-model="tab" centered dark grow>
-        <v-tabs-slider color="purple"/>
-        <v-tab> Signup  </v-tab>
+        <v-tabs-slider color="purple" />
+        <v-tab> Signup </v-tab>
         <v-tab> Login </v-tab>
       </v-tabs>
       <v-tabs-items dark v-model="tab">
         <v-tab-item>
-          <SignupForm
-            @snackbar="handleSnackbarEvent"
-          />
+          <SignupForm @snackbar="handleSnackbarEvent" />
         </v-tab-item>
         <v-tab-item>
-          <LoginForm />
+          <LoginForm @snackbar="handleSnackbarEvent" />
         </v-tab-item>
       </v-tabs-items>
     </v-card>
-    <Snackbar :visible="snackbar" :text="snackbarText" :color="snackbarColor" />
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="3000"
+      :color="snackbarColor"
+      class="text-center"
+    >
+      {{ snackbarText }}
+    </v-snackbar>
   </v-card>
 </template>
 
 <script>
-import Snackbar from "@/components/Snackbar";
 import LoginForm from "@/components/LoginForm";
 import SignupForm from "@/components/SignupForm";
 export default {
   name: "LoginAndSignUp",
-  components: { Snackbar, LoginForm, SignupForm },
+  components: { LoginForm, SignupForm },
   data() {
     return {
       snackbarColor: "",
       snackbarText: "",
       snackbar: false,
       tab: 0,
-      login: {
-        username: "",
-        password: "",
-      },
     };
   },
   methods: {
-    handleSnackbarEvent({text, color}) {
+    handleSnackbarEvent({ text, color }) {
       this.turnOnSnackbar();
       this.setSnackbarText(text);
       this.setSnackbarColor(color);
