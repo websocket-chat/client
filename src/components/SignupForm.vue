@@ -1,60 +1,72 @@
 <template>
-  <v-card flat height="auto" width="60%" class="mx-auto">
+  <v-card flat height="auto" width="90%" class="mx-auto">
     <form class="form-group">
-      <v-text-field
-        v-model="email"
-        :error-messages="emailErrors"
-        label="Email"
-        dark
-        class="form__input"
-        append-icon="mdi-email"
-        @input="$v.email.$touch()"
-        @blur="$v.email.$touch()"
-      >
-      </v-text-field>
-      <v-text-field
-        v-model="username"
-        :error-messages="usernameErrors"
-        :conter="16"
-        label="Username"
-        dark
-        required
-        class="form__input"
-        append-icon="mdi-account"
-        @input="$v.username.$touch()"
-        @blur="$v.username.$touch()"
-      >
-      </v-text-field>
-      <v-text-field
-        v-model="password"
-        :type="!showPassword ? 'password' : 'text'"
-        :counter="28"
-        :error-messages="passwordErrors"
-        label="Password"
-        class="form__input"
-        dark
-        @input="$v.password.$touch()"
-        @blur="$v.password.$touch()"
-      >
-        <template v-slot:append>
-          <v-icon @click="showPassword = !showPassword" class="password-toggle">
-            {{ !showPassword ? "mdi-eye-off" : "mdi-eye" }}
-          </v-icon>
-          <v-icon> mdi-lock </v-icon>
-        </template>
-      </v-text-field>
+      <v-container fluid fill-height>
+        <v-row no-gutters>
+          <v-col cols="12">
+            <v-text-field
+              v-model="email"
+              :error-messages="emailErrors"
+              label="Email"
+              dark
+              class="form__input"
+              append-icon="mdi-email"
+              @input="$v.email.$touch()"
+              @blur="$v.email.$touch()"
+            />
+          </v-col>
+          <v-col cols="12">
+            <v-text-field
+              v-model="username"
+              :error-messages="usernameErrors"
+              :conter="16"
+              label="Username"
+              dark
+              required
+              class="form__input"
+              append-icon="mdi-account"
+              @input="$v.username.$touch()"
+              @blur="$v.username.$touch()"
+            />
+          </v-col>
+          <v-col cols="12">
+            <v-text-field
+              v-model="password"
+              :type="!showPassword ? 'password' : 'text'"
+              :counter="28"
+              :error-messages="passwordErrors"
+              label="Password"
+              class="form__input"
+              dark
+              @input="$v.password.$touch()"
+              @blur="$v.password.$touch()"
+            >
+              <template v-slot:append>
+                <v-icon
+                  @click="showPassword = !showPassword"
+                  class="password-toggle"
+                >
+                  {{ !showPassword ? "mdi-eye-off" : "mdi-eye" }}
+                </v-icon>
+                <v-icon> mdi-lock </v-icon>
+              </template>
+            </v-text-field>
+          </v-col>
+        </v-row>
+      </v-container>
+
       <v-card
         class="d-flex justify-end my-2"
         flat
         height="fit-content"
         width="100%"
       >
-        <v-btn @click="clearSignupForm" text class="ma-1" color="error"
-          >Clear</v-btn
-        >
-        <v-btn @click="createUserAccount" text class="ma-1" color="success"
-          >Signup</v-btn
-        >
+        <v-btn @click="clearSignupForm" text large outlined class="ma-1" color="error">
+          Clear
+        </v-btn>
+        <v-btn @click="createUserAccount" text large outlined class="ma-1" color="success">
+          Signup
+        </v-btn>
       </v-card>
     </form>
   </v-card>
@@ -127,9 +139,7 @@ export default {
           });
         })
         .finally(() => {
-          window.setTimeout(() => {
-            this.$router.push({name: "Home"});
-          }, 3000);
+          this.$emit("tab-switch");
         });
     },
     clearSignupForm() {
