@@ -8,8 +8,8 @@
         dark
         class="form__input"
         append-icon="mdi-email"
-        @input="vulidate.email.$touch()"
-        @blur="vulidate.email.$touch()"
+        @input="$v.email.$touch()"
+        @blur="$v.email.$touch()"
       >
       </v-text-field>
       <v-text-field
@@ -21,8 +21,8 @@
         required
         class="form__input"
         append-icon="mdi-account"
-        @input="vulidate.username.$touch()"
-        @blur="vulidate.username.$touch()"
+        @input="$v.username.$touch()"
+        @blur="$v.username.$touch()"
       >
       </v-text-field>
       <v-text-field
@@ -33,8 +33,8 @@
         label="Password"
         class="form__input"
         dark
-        @input="vulidate.password.$touch()"
-        @blur="vulidate.password.$touch()"
+        @input="$v.password.$touch()"
+        @blur="$v.password.$touch()"
       >
         <template v-slot:append>
           <v-icon @click="showPassword = !showPassword" class="password-toggle">
@@ -61,15 +61,20 @@
 </template>
 
 <script>
-import { helpers, minLength, maxLength, email, required } from "vuelidate/lib/validators";
+import {
+  helpers,
+  minLength,
+  maxLength,
+  email,
+  required,
+} from "vuelidate/lib/validators";
 import AccountServices from "@/services/AccountService";
 
 export default {
   name: "SignupForm",
   validations() {
-
     const hasUpperCase = helpers.regex("hasUpperCase", /[A-Z]/);
-    const hasLowerCase = helpers.regex("hasLowerCase", /[a-z]/)
+    const hasLowerCase = helpers.regex("hasLowerCase", /[a-z]/);
     const hasNumbers = helpers.regex("hasNumbers", /[0-9]/);
     return {
       email: {
@@ -97,21 +102,34 @@ export default {
       email: "",
       password: "",
       showPassword: false,
+      successful: false,
     };
   },
   methods: {
     createUserAccount() {
-      AccountServices.create(this.username, this.password, this.email)
+      this.$v.$touch();
+      AccountServices.create(this.username, this.email, this.password)
         .catch((error) => {
-          this.snackbarText = this.determineSnackbarMessage(
+          let snackbarText = this.determineSnackbarMessage(
             error.response.data.error
           );
-          this.snackbarColor = "error";
-          this.snackbar = true;
+          this.$emit("snackbar", {
+            text: snackbarText,
+            color: "error",
+          });
         })
         .then((res) => {
           if (!res) return;
-          console.log(res);
+
+          this.$emit("snackbar", {
+            text: "Success! 🎉",
+            color: "success",
+          });
+        })
+        .finally(() => {
+          window.setTimeout(() => {
+            this.$router.push({name: "Home"});
+          }, 3000);
         });
     },
     clearSignupForm() {
@@ -120,11 +138,24 @@ export default {
       this.password = "";
       this.$v.$reset();
     },
+    determineSnackbarMessage(response) {
+      switch (response) {
+        case "accounts.email_address_exists":
+          return "ERROR! EMAIL ALREADY EXISTS!";
+        case "accounts.username_exists":
+          return "ERROR! USERNAME ALREADY EXISTS!";
+        case "accounts.email_address_invalid":
+          return "ERROR! INVALID EMAIL!";
+        case "accounts.password_invalid":
+          return "ERROR! INVALID PASSWORD!";
+        case "accounts.username_invalid":
+          return "ERROR! INVALID USERNAME!";
+        case "accounts.signup_failed":
+          return "ERROR! SIGNUP HAS FAILED!";
+      }
+    },
   },
   computed: {
-    vulidate() {
-      return this.$v;
-    },
     emailErrors() {
       const errors = [];
 
@@ -143,9 +174,11 @@ export default {
 
       !this.$v.username.required && errors.push("Username is required!");
 
-      !this.$v.username.minLength && errors.push("Username must be at least 3 letters");
+      !this.$v.username.minLength &&
+        errors.push("Username must be at least 3 letters");
 
-      !this.$v.username.maxLength && errors.push("Username must not be more than 16 letters.")
+      !this.$v.username.maxLength &&
+        errors.push("Username must not be more than 16 letters.");
 
       return errors;
     },
@@ -156,9 +189,11 @@ export default {
 
       !this.$v.password.required && errors.push("Password required!");
 
-      !this.$v.password.minLength && errors.push("Password must be at least 8 letters");
+      !this.$v.password.minLength &&
+        errors.push("Password must be at least 8 letters");
 
-      !this.$v.password.maxLength && errors.push("Password must not be more than 28 letters")
+      !this.$v.password.maxLength &&
+        errors.push("Password must not be more than 28 letters");
 
       !this.$v.password.hasLowerCase &&
         errors.push("Must have at least one lowercase letter.");

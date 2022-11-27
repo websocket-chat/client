@@ -15,7 +15,9 @@
       </v-tabs>
       <v-tabs-items dark v-model="tab">
         <v-tab-item>
-          <SignupForm />
+          <SignupForm
+            @snackbar="handleSnackbarEvent"
+          />
         </v-tab-item>
         <v-tab-item>
           <LoginForm />
@@ -33,7 +35,6 @@ import SignupForm from "@/components/SignupForm";
 export default {
   name: "LoginAndSignUp",
   components: { Snackbar, LoginForm, SignupForm },
-
   data() {
     return {
       snackbarColor: "",
@@ -46,23 +47,20 @@ export default {
       },
     };
   },
-
   methods: {
-    determineSnackbarMessage(response) {
-      switch (response) {
-        case "accounts.email_address_exists":
-          return "ERROR! EMAIL ALREADY EXISTS!";
-        case "accounts.username_exists":
-          return "ERROR! USERNAME ALREADY EXISTS!";
-        case "accounts.email_address_invalid":
-          return "ERROR! INVALID EMAIL!";
-        case "accounts.password_invalid":
-          return "ERROR! INVALID PASSWORD!";
-        case "accounts.username_invalid":
-          return "ERROR! INVALID USERNAME!";
-        case "accounts.signup_failed":
-          return "ERROR! SIGNUP HAS FAILED!";
-      }
+    handleSnackbarEvent({text, color}) {
+      this.turnOnSnackbar();
+      this.setSnackbarText(text);
+      this.setSnackbarColor(color);
+    },
+    turnOnSnackbar() {
+      this.snackbar = true;
+    },
+    setSnackbarText(text) {
+      this.snackbarText = text;
+    },
+    setSnackbarColor(color) {
+      this.snackbarColor = color;
     },
   },
 };
