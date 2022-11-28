@@ -105,7 +105,8 @@ export default {
         .then((res) => {
           if (!res) return;
 
-          this.$store.commit("setUserData", res.data);
+          this.$store.dispatch("user/dispatchSetUserData", res.data);
+          this.$store.dispatch("user/dispatchSetAuthenticated", true);
 
           this.$emit("snackbar", {
             text: "Success! 🎉",
