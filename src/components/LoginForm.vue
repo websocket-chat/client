@@ -46,13 +46,6 @@
         Login
       </v-btn>
     </v-card>
-    <template v-slot:progress>
-      <v-progress-linear
-        color="purple"
-        height="2"
-        indeterminate
-      ></v-progress-linear>
-    </template>
   </v-card>
 </template>
 
@@ -74,12 +67,14 @@ export default {
   },
   data() {
     return {
-      loading: false,
       username: "",
       password: "",
     };
   },
   methods: {
+    toggleLoadingState(turnOn) {
+      turnOn ? this.$emit("loading", true) : this.$emit("loading", false);
+    },
     determineSnackbarMessage(response) {
       switch (response) {
         case "ServiceError.SESSIONS_NOT_FOUND":
@@ -91,6 +86,7 @@ export default {
       }
     },
     loginUser() {
+      this.toggleLoadingState(true);
       this.$v.$touch();
       SessionService.login(this.username, this.password)
         .catch((error) => {
@@ -105,6 +101,8 @@ export default {
         .then((res) => {
           if (!res) return;
 
+          console.log(res);
+
           this.$store.dispatch("user/dispatchSetUserData", res.data);
           this.$store.dispatch("user/dispatchSetAuthenticated", true);
 
@@ -113,7 +111,10 @@ export default {
             color: "success",
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          this.toggleLoadingState(false);
+          this.$router.push({ name: "Messenger" });
+        });
     },
     clearLoginForm() {
       this.username = "";

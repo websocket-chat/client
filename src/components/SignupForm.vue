@@ -118,7 +118,11 @@ export default {
     };
   },
   methods: {
+    toggleLoadingState(turnOn) {
+      turnOn ? this.$emit("loading", true) : this.$emit("loading", false);
+    },
     createUserAccount() {
+      this.toggleLoadingState(true);
       this.$v.$touch();
       AccountServices.create(this.username, this.email, this.password)
         .catch((error) => {
@@ -139,6 +143,7 @@ export default {
           });
         })
         .finally(() => {
+          this.toggleLoadingState(false);
           this.$emit("tab-switch");
         });
     },
