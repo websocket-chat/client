@@ -1,6 +1,13 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app dark expand-on-hover mini-variant>
+    <v-app-bar app dark >
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-title class="page-title">
+        Messenger
+        <v-icon color="purple">mdi-forum</v-icon>
+      </v-app-bar-title>
+    </v-app-bar>
+    <v-navigation-drawer v-model="drawer" app dark >
       <v-list>
         <v-list-item v-for="(page, i) in pages" :key="i" link :to="page.href">
           <v-list-item-icon>
@@ -29,7 +36,7 @@ export default {
   components: {},
   data() {
     return {
-      drawer: true,
+      drawer: false,
       pages: [
         { name: "Login & Signup", icon: "mdi-account", href: "/login" },
         { name: "Home", icon: "mdi-home", href: "/" },
@@ -55,6 +62,12 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.page-title {
+  font-family: 'Righteous', cursive;
+}
+
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
