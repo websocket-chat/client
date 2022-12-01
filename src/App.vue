@@ -1,13 +1,27 @@
 <template>
   <v-app>
-    <v-app-bar app dark >
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title class="page-title">
-        Messenger
-        <v-icon color="purple">mdi-forum</v-icon>
-      </v-app-bar-title>
+    <v-app-bar clipped-left width="100%" app>
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
+      <v-spacer />
+      <h1 class="pa-0 page-title">Messenger</h1>
+      <v-icon
+        size="xx-large"
+        color="purple"
+        class="material-symbols-outlined ml-1"
+      >
+        forum
+      </v-icon>
+      <v-spacer />
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        hide-details
+        :append-icon="
+          $vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny'
+        "
+        class="my-auto "
+      />
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" app dark >
+    <v-navigation-drawer v-model="drawer" app clipped>
       <v-list>
         <v-list-item v-for="(page, i) in pages" :key="i" link :to="page.href">
           <v-list-item-icon>
@@ -25,7 +39,9 @@
     </v-navigation-drawer>
     <v-main>
       <v-container fluid fill-height class="pa-0">
-        <router-view />
+        <v-theme-provider root>
+          <router-view />
+        </v-theme-provider>
       </v-container>
     </v-main>
   </v-app>
@@ -38,7 +54,6 @@ export default {
     return {
       drawer: false,
       pages: [
-        { name: "Login & Signup", icon: "mdi-account", href: "/login" },
         { name: "Home", icon: "mdi-home", href: "/" },
         { name: "Admin", icon: "mdi-security", href: "/admin" },
         { name: "Messenger", icon: "mdi-message", href: "/messenger" },
@@ -62,14 +77,18 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Shrikhand&display=swap");
 .page-title {
-  font-family: 'Righteous', cursive;
+  font-family: "Shrikhand", cursive;
+  font-weight: 200;
 }
 
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 25, "opsz" 124;
 }
 </style>
