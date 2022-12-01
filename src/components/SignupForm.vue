@@ -1,14 +1,15 @@
 <template>
   <v-card flat height="auto" width="90%" class="mx-auto">
-    <form class="form-group">
+    <form>
       <v-container fluid fill-height>
-        <v-row no-gutters>
+        <v-row no-gutters dense >
           <v-col cols="12">
             <v-text-field
               v-model="email"
               :error-messages="emailErrors"
+              solo
+              outlined
               label="Email"
-              dark
               class="form__input"
               append-icon="mdi-email"
               @input="$v.email.$touch()"
@@ -21,8 +22,8 @@
               :error-messages="usernameErrors"
               :conter="16"
               label="Username"
-              dark
-              required
+              solo
+              outlined
               class="form__input"
               append-icon="mdi-account"
               @input="$v.username.$touch()"
@@ -35,9 +36,10 @@
               :type="!showPassword ? 'password' : 'text'"
               :counter="28"
               :error-messages="passwordErrors"
+              solo
+              outlined
               label="Password"
               class="form__input"
-              dark
               @input="$v.password.$touch()"
               @blur="$v.password.$touch()"
             >
@@ -61,10 +63,24 @@
         height="fit-content"
         width="100%"
       >
-        <v-btn @click="clearSignupForm" text large outlined class="ma-1" color="error">
+        <v-btn
+          @click="clearSignupForm"
+          text
+          large
+          outlined
+          class="ma-1"
+          color="error"
+        >
           Clear
         </v-btn>
-        <v-btn @click="createUserAccount" text large outlined class="ma-1" color="success">
+        <v-btn
+          @click="createUserAccount"
+          text
+          large
+          outlined
+          class="ma-1"
+          color="success"
+        >
           Signup
         </v-btn>
       </v-card>
