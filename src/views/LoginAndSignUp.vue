@@ -1,21 +1,18 @@
 <template>
-  <v-card height="100%" width="100%" flat>
-    <CircleLoader color="purple" :loading="loading" />
+  <v-card height="100%" width="100%" flat tile>
+    <CircleLoader color="primary" :loading="loading" />
     <v-card
-      tile
-      flat
-      dark
       height="100%"
       width="100%"
       class="d-flex justify-center align-center"
     >
-      <v-card dark height="auto" width="50%" elevation="12">
-        <v-tabs v-model="tab" centered dark grow>
-          <v-tabs-slider color="purple" />
+      <v-card height="auto" width="50%" outlined elevation="5">
+        <v-tabs v-model="tab" centered>
+          <v-tabs-slider color="accent" />
           <v-tab> Signup </v-tab>
           <v-tab> Login </v-tab>
         </v-tabs>
-        <v-tabs-items dark v-model="tab">
+        <v-tabs-items v-model="tab">
           <v-tab-item>
             <SignupForm
               @snackbar="handleSnackbarEvent"
