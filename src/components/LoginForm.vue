@@ -1,48 +1,47 @@
 <template>
-  <v-card flat height="auto" width="100%">
-    <form class="ma-12">
-      <v-text-field
-        v-model="username"
-        :error-messages="usernameErrors"
-        append-icon="mdi-account"
-        label="Username"
-        class="form__input"
-        clearable
-        clear-icon="mdi-close-circle-outline"
-        @input="$v.username.$touch()"
-        @blur="$v.username.$touch()"
-      />
-      <v-text-field
-        v-model="password"
-        :error-messages="passwordErrors"
-        class="form__input"
-        label="Password"
-        append-icon="mdi-lock"
-        clearable
-        clear-icon="mdi-close-circle-outline"
-        @input="$v.password.$touch()"
-        @blur="$v.password.$touch()"
-      />
+  <v-card flat height="auto" width="90%" class="mx-auto">
+    <form class="">
+      <v-container fluid fill-height>
+        <v-row dense no-gutters>
+          <v-col cols="12">
+            <v-text-field
+              v-model="username"
+              :error-messages="usernameErrors"
+              solo
+              outlined
+              append-icon="mdi-account"
+              label="Username"
+              class="form__input"
+              clearable
+              clear-icon="mdi-close-circle-outline"
+              @input="$v.username.$touch()"
+              @blur="$v.username.$touch()"
+            />
+          </v-col>
+          <v-col cols="12">
+            <v-text-field
+              v-model="password"
+              :error-messages="passwordErrors"
+              solo
+              outlined
+              class="form__input"
+              label="Password"
+              append-icon="mdi-lock"
+              clearable
+              clear-icon="mdi-close-circle-outline"
+              @input="$v.password.$touch()"
+              @blur="$v.password.$touch()"
+            />
+          </v-col>
+          <v-col cols="12"></v-col>
+        </v-row>
+      </v-container>
     </form>
     <v-card flat tile class="d-flex justify-end ma-2">
-      <v-btn
-        @click="clearLoginForm"
-        text
-        outlined
-        large
-        color="error"
-        class="ma-1"
-      >
+      <v-btn @click="clearLoginForm" text outlined color="error" class="ma-1">
         Clear
       </v-btn>
-      <v-btn
-        @click="loginUser"
-        text
-        outlined
-        large
-        color="success"
-        class="ma-1"
-      >
+      <v-btn @click="loginUser" text outlined color="accent" class="ma-1">
         Login
       </v-btn>
     </v-card>
@@ -100,8 +99,6 @@ export default {
         })
         .then((res) => {
           if (!res) return;
-
-          console.log(res);
 
           this.$store.dispatch("user/dispatchSetUserData", res.data);
           this.$store.dispatch("user/dispatchSetAuthenticated", true);
