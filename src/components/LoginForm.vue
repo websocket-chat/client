@@ -100,10 +100,10 @@ export default {
         .then((res) => {
           if (!res) return;
 
-          this.$store.dispatch("user/setUserData",  res.data);
+          this.$store.dispatch("user/setUserData",  res.data.data);
           this.$store.dispatch("user/setAuthenticated", true);
 
-          window.localStorage.setItem("user", res.data.data);
+          window.localStorage.setItem("user", JSON.stringify(res.data.data));
 
           this.$emit("snackbar", {
             text: "Success! 🎉",
