@@ -12,15 +12,18 @@ const user = {
   }),
   mutations: {
     setUserData(state, user) {
-      state.user = Object.assign({}, user.data);
+      state.user = Object.assign({}, user);
     },
-    setAuthenticated(state, authenticated) {
-      state.authenticated = authenticated;
-    },
+    setAuthenticated(state, auth) {
+      state.authenticated = auth;
+    }
   },
   getters: {
     userInfo(state) {
       return state.user;
+    },
+    sessionID(state) {
+      return state.user.session_id;
     },
     checkAuthentication(state) {
       return state.authenticated;
@@ -30,9 +33,9 @@ const user = {
     setUserData({ commit }, user) {
       commit("setUserData", user);
     },
-    setAuthenticated({ commit }, authenticated) {
-      commit("setAuthenticated",  authenticated);
-    },
+    setAuthenticated({commit}, auth) {
+      commit("setAuthenticated", auth);
+    }
   },
 };
 
