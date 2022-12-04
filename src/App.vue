@@ -1,26 +1,28 @@
 <template>
   <v-app>
     <v-app-bar clipped-left width="100%" app>
-      <v-app-bar-nav-icon @click="drawer = !drawer" />
-      <v-spacer />
+      <v-app-bar-nav-icon @click="drawer = !drawer"/>
+      <v-spacer/>
       <h1 class="pa-0 page-title">Messenger</h1>
       <v-icon
-        size="xx-large"
-        color="purple"
-        class="material-symbols-outlined ml-1"
+          size="xx-large"
+          color="purple"
+          class="material-symbols-outlined ml-1"
       >
         forum
       </v-icon>
-      <v-spacer />
+      <v-spacer/>
       <v-switch
-        v-model="$vuetify.theme.dark"
-        inset
-        hide-details
-        :append-icon="
+          v-model="$vuetify.theme.dark"
+          inset
+          hide-details
+          :append-icon="
           $vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny'
         "
-        class="my-auto "
+          class="my-auto "
       />
+      <LogoutButton/>
+
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list>
@@ -41,7 +43,7 @@
     <v-main>
       <v-container fluid fill-height class="pa-0">
         <v-theme-provider root>
-          <router-view />
+          <router-view/>
         </v-theme-provider>
       </v-container>
     </v-main>
@@ -49,21 +51,29 @@
 </template>
 
 <script>
+import LogoutButton from "@/components/LogoutButton";
+
 export default {
   beforeCreate() {
-    const user = window.localStorage.getItem("user");
-    if (user) {
+    const user = JSON.parse(window.localStorage.getItem("user"));
+
+    if (!user) return;
+
+    if (user.session_id.length > 0) {
       this.$store.dispatch("user/setUserData", user);
       this.$store.dispatch("user/setAuthenticated", true);
-      this.$router.push({name: "Home"});
+      this.$router.push({name: "Home"})
     }
+  },
+  components: {
+    LogoutButton
   },
   data() {
     return {
       drawer: false,
       pages: [
-        { name: "Home", icon: "mdi-home", href: "/" },
-        { name: "Messenger", icon: "mdi-message", href: "/messenger" },
+        {name: "Home", icon: "mdi-home", href: "/"},
+        {name: "Messenger", icon: "mdi-message", href: "/messenger"},
       ],
     };
   },
@@ -85,6 +95,7 @@ export default {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Shrikhand&display=swap");
+
 .page-title {
   font-family: "Shrikhand", cursive;
   font-weight: 200;
