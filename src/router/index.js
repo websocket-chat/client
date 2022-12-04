@@ -24,15 +24,6 @@ const routes = [
     component: () => import("@/views/LoginAndSignUp.vue"),
   },
   {
-    path: "/admin-panel",
-    name: "AdminPanel",
-    meta: {
-      restricted: true,
-      title: "Admin Panel",
-    },
-    component: () => import("@/views/AdminPanel.vue"),
-  },
-  {
     path: "/messenger",
     name: "Messenger",
     meta: {
@@ -51,6 +42,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   let authenticated = Store.getters["user/checkAuthentication"];
+
   if (!authenticated && to.path !== "/login") {
     next({ name: "LoginAndSignUp" });
   } else {
