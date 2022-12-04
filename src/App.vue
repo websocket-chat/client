@@ -14,6 +14,7 @@
       <v-spacer />
       <v-switch
         v-model="$vuetify.theme.dark"
+        inset
         hide-details
         :append-icon="
           $vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny'
@@ -49,13 +50,19 @@
 
 <script>
 export default {
-  components: {},
+  beforeCreate() {
+    const user = window.localStorage.getItem("user");
+    if (user) {
+      this.$store.dispatch("user/setUserData", user);
+      this.$store.dispatch("user/setAuthenticated", true);
+      this.$router.push({name: "Home"});
+    }
+  },
   data() {
     return {
       drawer: false,
       pages: [
         { name: "Home", icon: "mdi-home", href: "/" },
-        { name: "Admin", icon: "mdi-security", href: "/admin" },
         { name: "Messenger", icon: "mdi-message", href: "/messenger" },
       ],
     };
