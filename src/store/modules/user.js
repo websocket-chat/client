@@ -27,11 +27,11 @@ const user = {
     },
   },
   actions: {
-    dispatchSetUserData({ commit }) {
-      commit("setUserData", commit);
+    setUserData({ commit }, user) {
+      commit("setUserData", user);
     },
-    dispatchSetAuthenticated({ commit }) {
-      commit("setAuthenticated", commit);
+    setAuthenticated({ commit }, authenticated) {
+      commit("setAuthenticated",  authenticated);
     },
   },
 };
