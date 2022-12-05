@@ -1,5 +1,5 @@
 <template>
-  <v-card flat height="auto" width="90%" class="mx-auto">
+  <v-card flat height="auto" :width="formWidth" class="mx-auto">
     <form>
       <v-container fluid fill-height>
         <v-row no-gutters dense >
@@ -7,8 +7,6 @@
             <v-text-field
               v-model="email"
               :error-messages="emailErrors"
-              solo
-              outlined
               label="Email"
               class="form__input"
               append-icon="mdi-email"
@@ -22,8 +20,7 @@
               :error-messages="usernameErrors"
               :conter="16"
               label="Username"
-              solo
-              outlined
+
               class="form__input"
               append-icon="mdi-account"
               @input="$v.username.$touch()"
@@ -36,8 +33,6 @@
               :type="!showPassword ? 'password' : 'text'"
               :counter="28"
               :error-messages="passwordErrors"
-              solo
-              outlined
               label="Password"
               class="form__input"
               @input="$v.password.$touch()"
@@ -187,6 +182,25 @@ export default {
     },
   },
   computed: {
+    formWidth() {
+      if (this.$vuetify.breakpoint.mobile) {
+        return "100%";
+      }
+      switch (this.$vuetify.breakpoint.name) {
+        case "xl":
+          return "60%";
+        case "lg":
+          return "65%";
+        case "md":
+          return "70%";
+        case "sm":
+          return "80%";
+        case "xs":
+          return "100%";
+        default:
+          return "65%";
+      }
+    },
     emailErrors() {
       const errors = [];
 
