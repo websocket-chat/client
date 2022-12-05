@@ -1,6 +1,9 @@
 <template>
-  <v-btn v-if="authenticated" x-small @click="logout" color="red">
+  <v-btn v-if="authenticated" @click="logout" block color="red" >
     Logout
+    <v-icon small>
+      mdi-logout
+    </v-icon>
   </v-btn>
 </template>
 

@@ -1,30 +1,29 @@
 <template>
   <v-app>
-    <v-app-bar clipped-left width="100%" app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"/>
+    <v-app-bar clipped-left width="100%" app >
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer/>
-      <h1 class="pa-0 page-title">Messenger</h1>
+      <v-app-bar-title class="pa-0 page-title">Messenger</v-app-bar-title>
       <v-icon
-          size="xx-large"
+          size="large"
           color="purple"
           class="material-symbols-outlined ml-1"
       >
         forum
       </v-icon>
       <v-spacer/>
+
       <v-switch
           v-model="$vuetify.theme.dark"
           inset
           hide-details
-          :append-icon="
+          :prepend-icon="
           $vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny'
         "
           class="my-auto "
       />
-      <LogoutButton/>
-
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" app clipped>
+    <v-navigation-drawer v-model="drawer" app clipped >
       <v-list>
         <v-list-item v-for="(page, i) in pages" :key="i" link :to="page.href">
           <v-list-item-icon>
@@ -39,6 +38,13 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <template v-slot:append>
+        <v-card flat height="fit-content" width="95%" class="mx-auto my-1">
+          <LogoutButton/>
+
+        </v-card>
+
+      </template>
     </v-navigation-drawer>
     <v-main>
       <v-container fluid fill-height class="pa-0">
@@ -78,6 +84,9 @@ export default {
     };
   },
   computed: {
+    mobile() {
+      return this.$vuetify.breakpoint.mobile;
+    },
     pageTitle() {
       return this.$route.meta.title;
     },
