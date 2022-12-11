@@ -6,7 +6,7 @@
         width="100%"
         class="d-flex justify-center align-center"
     >
-      <v-card flat :height="mobile ? '50%' : 'auto'" :width="mobile ? '100%' : '50%'"  >
+      <v-card outlined :elevation="mobile ? '0' : '10'" :height="mobile ? '50%' : 'auto'" :width="mobile ? '100%' : '50%'"  >
         <v-tabs v-model="tab" centered>
           <v-tabs-slider color="accent"/>
           <v-tab> Signup</v-tab>
