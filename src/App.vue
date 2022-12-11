@@ -3,14 +3,7 @@
     <v-app-bar clipped-left width="100%" app >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer/>
-      <v-app-bar-title class="pa-0 page-title">Messenger</v-app-bar-title>
-      <v-icon
-          size="large"
-          color="purple"
-          class="material-symbols-outlined ml-1"
-      >
-        forum
-      </v-icon>
+      <v-icon x-large color="primary" class="ml-1">mdi-forum</v-icon>
       <v-spacer/>
 
       <v-switch
@@ -41,9 +34,7 @@
       <template v-slot:append>
         <v-card flat height="fit-content" width="95%" class="mx-auto my-1">
           <LogoutButton/>
-
         </v-card>
-
       </template>
     </v-navigation-drawer>
     <v-main>
@@ -107,7 +98,7 @@ export default {
 
 .page-title {
   font-family: "Shrikhand", cursive;
-  font-weight: 200;
+  font-weight: 400;
 }
 
 #app {
