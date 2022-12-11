@@ -27,10 +27,10 @@ const routes = [
         path: "/messenger",
         name: "Messenger",
         meta: {
-            restricted: false,
+            restricted: true,
             title: "Messenger"
         },
-
+        component: () => import("@/views/Messenger.vue")
     }
 ];
 
