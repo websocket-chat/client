@@ -10,7 +10,6 @@
                 append-icon="mdi-account"
                 label="Username"
                 class="form__input"
-                clearable
                 clear-icon="mdi-close-circle-outline"
                 @input="$v.username.$touch()"
                 @blur="$v.username.$touch()"
@@ -20,14 +19,22 @@
             <v-text-field
                 v-model="password"
                 :error-messages="passwordErrors"
+                :type="visible ? 'text' : 'password'"
                 class="form__input"
                 label="Password"
-                append-icon="mdi-lock"
-                clearable
                 clear-icon="mdi-close-circle-outline"
                 @input="$v.password.$touch()"
                 @blur="$v.password.$touch()"
-            />
+            >
+              <template v-slot:append>
+                <v-icon @click="visible = !visible">
+                  {{ visible ? "mdi-eye-off" : "mdi-eye"}}
+                </v-icon>
+                <v-icon>
+                  mdi-lock
+                </v-icon>
+              </template>
+            </v-text-field>
           </v-col>
           <v-col cols="12"></v-col>
         </v-row>
@@ -37,7 +44,7 @@
       <v-btn @click="clearLoginForm" text outlined color="error" class="ma-1">
         Clear
       </v-btn>
-      <v-btn @click="loginUser" text outlined color="accent" class="ma-1">
+      <v-btn @click="loginUser" text outlined color="success" class="ma-1">
         Login
       </v-btn>
     </v-card>
@@ -64,6 +71,7 @@ export default {
     return {
       username: "",
       password: "",
+      visible: false,
     };
   },
   methods: {
