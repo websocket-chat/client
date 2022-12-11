@@ -1,13 +1,15 @@
 import ApiClient from "../clients/ApiClient";
 
 export default {
-    uploadAvatar(file, accountID) {
+    uploadAvatar(file, accountID, sessionID) {
         return ApiClient({
             method: "POST",
             url: `/v1/accounts/${accountID}/avatar`,
-            data: {
-                upload_file: file,
-            }
+            headers: {
+                "Authorization": `Bearer ${sessionID}`,
+                "Content-Type": "multipart/form-data"
+            },
+            data: file
         });
     },
     fetchAvatar(accountID) {
