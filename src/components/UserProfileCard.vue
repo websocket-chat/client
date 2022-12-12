@@ -32,10 +32,10 @@
             </v-row>
           </v-container>
           <v-card-actions class="d-flex justify-end">
-            <v-btn @click="settingsDialog = false" outlined color="error">
+            <v-btn @click="closeSettingsDialog" outlined color="error">
               Close
             </v-btn>
-            <v-btn @click="uploadAvatar" :disabled="!serverPayload">
+            <v-btn @click="uploadAvatar" :disabled="disableSubmit === null">
               Submit
             </v-btn>
           </v-card-actions>
@@ -55,20 +55,27 @@ export default {
     return {
       userInfo: {},
       loading: false,
-      progress: 0,
-      image: new Image(),
       avatar: {},
       settingsDialog: false,
       serverPayload: new FormData(),
+      submissionReady: false,
       rules: [
         (val) => !val || val.size < 1024 * 1024 * 20 || "File cannot be larger than 20mb!",
       ]
     }
   },
   methods: {
+    closeSettingsDialog() {
+      this.settingsDialog = false;
+    },
     processFile(event) {
+      if (event.target.files.length === 0) return;
+
       let file = event.target.files[0];
+
       this.serverPayload.append("upload_file", file, file.name);
+      console.log(this.serverPayload.get("upload_file"));
+
     },
     toggleLoadingState(turnOn) {
       turnOn ? this.$emit("loading", true) : this.$emit("loading", false);
@@ -139,7 +146,9 @@ export default {
     }
   },
   computed: {
-
+    disableSubmit() {
+      return this.serverPayload.get("upload_file");
+    },
     sessionID() {
       return this.$store.getters["user/sessionID"];
     },

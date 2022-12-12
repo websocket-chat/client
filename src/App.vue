@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar clipped-left width="100%" app >
+    <v-app-bar app width="100%">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer/>
       <v-icon x-large color="primary" class="ml-1">mdi-forum</v-icon>
@@ -16,8 +16,8 @@
           class="my-auto "
       />
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" app clipped >
-      <v-list>
+    <v-navigation-drawer v-model="drawer" absolute temporary  >
+      <v-list nav dense>
         <v-list-item v-for="(page, i) in pages" :key="i" link :to="page.href">
           <v-list-item-icon>
             <v-icon>
@@ -40,8 +40,9 @@
     <v-main>
       <v-container fluid fill-height class="pa-0">
         <v-theme-provider root>
-          <router-view/>
+          <router-view @snackbar="handleSnackbarEvent"/>
         </v-theme-provider>
+        <Snackbar :visible="snackbar" :text="snackbarText" :color="snackbarColor"/>
       </v-container>
     </v-main>
   </v-app>
@@ -49,8 +50,50 @@
 
 <script>
 import LogoutButton from "@/components/LogoutButton";
+import Snackbar from "@/components/Snackbar";
 
 export default {
+  components: {
+    Snackbar,
+    LogoutButton
+  },
+  data() {
+    return {
+      drawer: false,
+      timeout: 2500,
+      snackbarText: "",
+      snackbarColor: "",
+      snackbar: false,
+      pages: [
+        {name: "Home", icon: "mdi-home", href: "/"},
+        {name: "Messenger", icon: "mdi-message", href: "/messenger"},
+      ],
+    };
+  },
+  methods: {
+    handleSnackbarEvent({text, color}) {
+      this.turnOnSnackbar();
+      this.setSnackbarText(text);
+      this.setSnackbarColor(color);
+    },
+    turnOnSnackbar() {
+      this.snackbar = true;
+    },
+    setSnackbarText(text) {
+      this.snackbarText = text;
+    },
+    setSnackbarColor(color) {
+      this.snackbarColor = color;
+    },
+  },
+  computed: {
+    mobile() {
+      return this.$vuetify.breakpoint.mobile;
+    },
+    pageTitle() {
+      return this.$route.meta.title;
+    },
+  },
   beforeCreate() {
     const user = JSON.parse(window.localStorage.getItem("user"));
 
@@ -61,26 +104,6 @@ export default {
       this.$store.dispatch("user/setAuthenticated", true);
       this.$router.push({name: "Home"})
     }
-  },
-  components: {
-    LogoutButton
-  },
-  data() {
-    return {
-      drawer: false,
-      pages: [
-        {name: "Home", icon: "mdi-home", href: "/"},
-        {name: "Messenger", icon: "mdi-message", href: "/messenger"},
-      ],
-    };
-  },
-  computed: {
-    mobile() {
-      return this.$vuetify.breakpoint.mobile;
-    },
-    pageTitle() {
-      return this.$route.meta.title;
-    },
   },
   created() {
     document.title = this.$route.meta.title;

@@ -9,7 +9,7 @@ export default {
   name: "Snackbar",
   data() {
     return {
-      timeout: 10000,
+      timeout: 2500,
     };
   },
   props: {

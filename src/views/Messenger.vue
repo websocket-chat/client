@@ -3,7 +3,6 @@
     <v-btn @click="sendMessage('balls')">
       click
     </v-btn>
-
   </v-card>
 </template>
 
@@ -31,7 +30,6 @@ export default {
 
     this.connection.addEventListener("open", () => {
       // login
-      console.log(this.sessionID);
       this.connection.send(this.sessionID);
     });
 

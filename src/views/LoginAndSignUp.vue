@@ -58,9 +58,16 @@ export default {
   },
   methods: {
     toggleLoadingState(state) {
+      this.$emit("loading", state);
       this.loading = state;
     },
     handleSnackbarEvent({text, color}) {
+      if (text === "Success! 🎉") {
+        this.$emit("snackbar", {
+          text: "Success! 🎉",
+          color: "success",
+        });
+      }
       this.turnOnSnackbar();
       this.setSnackbarText(text);
       this.setSnackbarColor(color);
